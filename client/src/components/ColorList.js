@@ -27,7 +27,8 @@ const ColorList = ({ colors, updateColors }) => {
       .put(`/api/colors/${colorToEdit.id}`, colorToEdit)
       .then(res => {
         console.log(res.data);
-       document.location.reload()
+
+        document.location.reload();
         post("/bubblepage");
       })
       .catch(err => console.log("colorList put error -", err));
