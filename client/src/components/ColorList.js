@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { axiosWithAuth } from '../utils/axiosWithAuth';
+import { useHistory } from 'react-router-dom';
 
 const initialColor = {
   color: "",
@@ -8,6 +9,7 @@ const initialColor = {
 
 const ColorList = ({ colors, updateColors }) => {
   console.log(colors);
+  const { post } = useHistory()
   const [editing, setEditing] = useState(false);
   const [colorToEdit, setColorToEdit] = useState(initialColor);
 
@@ -25,7 +27,8 @@ const ColorList = ({ colors, updateColors }) => {
       .put(`/api/colors/${colorToEdit.id}`, colorToEdit)
       .then(res => {
         console.log(res.data);
-        updateColors();
+       document.location.reload()
+        post("/bubblepage");
       })
       .catch(err => console.log("colorList put error -", err));
   };
@@ -36,6 +39,7 @@ const ColorList = ({ colors, updateColors }) => {
       .delete(`/api/colors/${color.id}`)
       .then(res => {
         document.location.reload(true)
+        
       })
       .catch(err => console.log(err));
   };
@@ -49,6 +53,7 @@ const ColorList = ({ colors, updateColors }) => {
             <span>
               <span className="delete" onClick={e => {
                     e.stopPropagation();
+                    // e.preventDefault();
                     deleteColor(color)
                   }
                 }>
